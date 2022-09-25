@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => 'microservice_auth',
 ], static function ($router) {
 
-    Route::group(['middleware' => 'microservice_auth', 'prefix' => 'vehicles'
+    Route::group(['prefix' => 'vehicles'
     ], static function ($router) {
         Route::post('', [VehicleController::class, 'store']);
         Route::get('qr', [VehicleController::class, 'qr']);
