@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\QRRequest;
 use App\Http\Requests\VehicleStoreRequest;
 use App\Models\Vehicle;
 use App\Services\VehicleData\VehicleDataClient;
 use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use JsonException;
@@ -41,8 +42,22 @@ class VehicleController extends Controller
     }
 
 
-    public function qr(Request $request)
+    public function qr(QRRequest $request): JsonResponse
     {
+        try {
+            $vehicleRegistrationNumber = $request->input("vehicle_registration_number");
+
+            $vehicle = Vehicle::where("vehicle_registration_number", $vehicleRegistrationNumber)
+                ->where("user_id", auth()->user()->id)
+                ->firstOrFail();
+
+            return response()->json(
+                [
+                    "qr" => $vehicle->vehicle_registration_number . " | " . $vehicle->guid
+                ]);
+        } catch (ModelNotFoundException $exception) {
+            return response()->json(["message" => "no vehicle registered"], 404);
+        }
 
     }
 }
