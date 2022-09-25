@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\VehicleController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('microservice_auth')->post('/user', function () {
-    return auth()->user();
+Route::group(['middleware' => 'microservice_auth',
+], static function ($router) {
+
+    Route::group(['middleware' => 'microservice_auth', 'prefix' => 'vehicles'
+    ], static function ($router) {
+        Route::post('', [VehicleController::class, 'store']);
+        Route::get('qr', [VehicleController::class, 'qr']);
+    });
+
 });
