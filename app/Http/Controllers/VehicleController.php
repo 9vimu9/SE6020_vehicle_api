@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\QRRequest;
 use App\Http\Requests\VehicleStoreRequest;
 use App\Models\Vehicle;
+use App\Services\QuotaData\QuotaDataClient;
 use App\Services\VehicleData\VehicleDataClient;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -34,9 +35,10 @@ class VehicleController extends Controller
                     "chassis_number" => $registeredVehicle['chassis_number'],
                 ]
             );
+            (new QuotaDataClient())->addQuota($vehicle->id);
             return response()->json($vehicle->toArray(), 201);
         } catch (GuzzleException|JsonException  $exception) {
-            return response()->json(["message" => "something went wrong"], 500);
+            return response()->json(["message" => "Something went wrong","error"=>(array)$exception], 500);
         }
 
     }

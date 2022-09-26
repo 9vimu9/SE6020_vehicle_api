@@ -58,6 +58,9 @@ services:
             retries: 3
             timeout: 5s
 networks:
+    my-proxy-net:
+        external:
+            name: giveItANamePlease
     sail:
         driver: bridge
 volumes:
