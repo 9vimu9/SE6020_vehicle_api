@@ -14,12 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['middleware' => 'microservice_auth',
+Route::group(['middleware' => 'NoFuelCenterIsAllowed',
 ], static function ($router) {
 
     Route::group(['prefix' => 'vehicles'
     ], static function ($router) {
-        Route::post('', [VehicleController::class, 'store']);
+        Route::post('', [VehicleController::class, 'store'])->middleware("NoUserIsAllowed");
         Route::get('qr', [VehicleController::class, 'qr']);
     });
 

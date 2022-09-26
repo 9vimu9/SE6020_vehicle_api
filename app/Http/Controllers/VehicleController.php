@@ -35,7 +35,7 @@ class VehicleController extends Controller
                     "chassis_number" => $registeredVehicle['chassis_number'],
                 ]
             );
-            (new QuotaDataClient())->addQuota($vehicle->id);
+//            (new QuotaDataClient())->addQuota($vehicle->id);//temp remove
             return response()->json($vehicle->toArray(), 201);
         } catch (GuzzleException|JsonException  $exception) {
             return response()->json(["message" => "Something went wrong","error"=>(array)$exception], 500);
