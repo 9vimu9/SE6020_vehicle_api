@@ -11,6 +11,7 @@ class Vehicle extends Model
 
     protected $fillable = [
         "user_id",
+        "qr_code_path",
         "guid",
         "vehicle_registration_number",
         "registered_date",

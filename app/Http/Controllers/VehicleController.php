@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\QRRequest;
 use App\Http\Requests\VehicleStoreRequest;
 use App\Models\Vehicle;
-use App\Services\QuotaData\QuotaDataClient;
+use App\Services\QRCode\QRCodeBuilder;
 use App\Services\VehicleData\VehicleDataClient;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -35,10 +35,11 @@ class VehicleController extends Controller
                     "chassis_number" => $registeredVehicle['chassis_number'],
                 ]
             );
+            $vehicle = (new QRCodeBuilder($vehicle->id))->build();
 //            (new QuotaDataClient())->addQuota($vehicle->id);//temp remove
             return response()->json($vehicle->toArray(), 201);
         } catch (GuzzleException|JsonException  $exception) {
-            return response()->json(["message" => "Something went wrong","error"=>(array)$exception], 500);
+            return response()->json(["message" => "Something went wrong", "error" => (array)$exception], 500);
         }
 
     }
@@ -53,10 +54,7 @@ class VehicleController extends Controller
                 ->where("user_id", auth()->user()->id)
                 ->firstOrFail();
 
-            return response()->json(
-                [
-                    "qr" => $vehicle->vehicle_registration_number . " | " . $vehicle->guid
-                ]);
+            return response()->json($vehicle->toArray());
         } catch (ModelNotFoundException $exception) {
             return response()->json(["message" => "no vehicle registered"], 404);
         }
