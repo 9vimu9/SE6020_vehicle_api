@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfiles/mariadb/Dockerfile
-#    image: 9wimu9/auth-app-mariadb-bitnami-cloudformation
+    image: 9wimu9/vehicle-api-mariadb
     environment:
       MARIADB_ROOT_PASSWORD: root
     healthcheck:
@@ -14,17 +14,17 @@ services:
       timeout: 5s
       retries: 6
     ports:
-      - '3309:3306'
+      - '3306:3306'
 
   myapp:
     build:
       context: .
       dockerfile: Dockerfiles/php/Dockerfile
-#    image: 9wimu9/auth-app-bitnami-formation-cloudformation
+    image: 9wimu9/vehicle-api-myapp
     ports:
-      - '8002:8000'
-    volumes:
-      - './:/app'
+      - '8000:8000'
+#    volumes:
+#      - './:/app'
     depends_on:
       - mariadb
 
