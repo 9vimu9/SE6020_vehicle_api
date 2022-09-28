@@ -12,14 +12,14 @@ class QuotaDataClient
     /**
      * @throws GuzzleException
      */
-    public function addQuota(int $vehicleID)
+    public function addQuota(int $vehicleID): void
     {
 
         $response = (new Client([
             'headers' => [
                 'Authorization' => 'Bearer ' . request()->bearerToken()
             ]
-        ]))->get(
+        ]))->post(
             config("vehicles.quota_data_api_url"),
             [
                 RequestOptions::JSON =>
@@ -30,7 +30,6 @@ class QuotaDataClient
                 'http_errors' => false
             ]
         );
-        dd("Fff");
         $statusCode = $response->getStatusCode();
 
         if ($statusCode !== 201) {
