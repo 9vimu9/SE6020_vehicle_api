@@ -28,13 +28,13 @@ services:
     depends_on:
       - mariadb
 
-#http://auth-loadb-5rvmh5xbgme4-58c4387b8bb2d7a6.elb.us-east-1.amazonaws.com:8000
+#vehic-LoadB-DD7UYMPF8NH7-a3b45740b59b4abf.elb.us-east-1.amazonaws.com:8000
 #        #https://github.com/aws/aws-cli/issues/6242#issuecomment-1079214960
-#      aws ecs update-service --cluster auth-api --service auth-api-MyappService-HLgLJ0GHOtRu --region us-east-1 --enable-execute-command --force-new-deployment
+#      aws ecs update-service --cluster vehicle-api --service vehicle-api-MyappService-buC4nKJtJY3G --region us-east-1 --enable-execute-command --force-new-deployment
 #    aws ecs execute-command  \
 #    --region us-east-1 \
-#    --cluster auth-api \
-#    --task f574670275414f0aa173b493cfb4ad51 \
+#    --cluster vehicle-api \
+#    --task b2b0c0c8236841f2b6800f8da45b3bb8 \
 #    --container  myapp \
 #    --command "/bin/bash" \
 #    --interactive
