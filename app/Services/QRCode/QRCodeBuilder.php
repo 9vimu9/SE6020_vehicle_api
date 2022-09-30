@@ -32,7 +32,7 @@ class QRCodeBuilder
 
     public function s3URL(): string
     {
-        $S3RelativePath = "/user_data/qr_codes/{$this->vehicle->guid}-" . time() . ".png";
+        $S3RelativePath = "user_data/qr_codes/{$this->vehicle->guid}-" . time() . ".png";
         return Storage::disk('s3')
             ->getClient()
             ->getObjectUrl(config('filesystems.disks.s3.bucket'), $S3RelativePath);
