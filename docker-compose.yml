@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfiles/mariadb/Dockerfile
-    image: 9wimu9/vehicle-api-mariadb
+    image: 9wimu9/vehicle-api-mariadb:latest
     environment:
       MARIADB_ROOT_PASSWORD: root
     healthcheck:
@@ -14,13 +14,13 @@ services:
       timeout: 5s
       retries: 6
     ports:
-      - '3306:3306'
+      - '3303:3306'
 
-  myapp:
+  laravel:
     build:
       context: .
       dockerfile: Dockerfiles/php/Dockerfile
-    image: 9wimu9/vehicle-api-myapp
+    image: 9wimu9/vehicle-api-laravel:latest
     ports:
       - '8000:8000'
 #    volumes:
@@ -30,12 +30,12 @@ services:
 
 #vehic-LoadB-DD7UYMPF8NH7-a3b45740b59b4abf.elb.us-east-1.amazonaws.com:8000
 #        #https://github.com/aws/aws-cli/issues/6242#issuecomment-1079214960
-#      aws ecs update-service --cluster vehicle-api --service vehicle-api-MyappService-buC4nKJtJY3G --region us-east-1 --enable-execute-command --force-new-deployment
+#      aws ecs update-service --cluster vehicle-api --service vehicle-api-LaravelService-ULddRaJzMxFh --region us-east-1 --enable-execute-command --force-new-deployment
 #    aws ecs execute-command  \
 #    --region us-east-1 \
 #    --cluster vehicle-api \
-#    --task b2b0c0c8236841f2b6800f8da45b3bb8 \
-#    --container  myapp \
+#    --task 2c8f33157e3a418fb97af52ef51216c7 \
+#    --container  laravel \
 #    --command "/bin/bash" \
 #    --interactive
 
