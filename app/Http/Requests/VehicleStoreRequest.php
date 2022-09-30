@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class VehicleStoreRequest extends FormRequest
 {
@@ -28,7 +27,7 @@ class VehicleStoreRequest extends FormRequest
             'vehicle_registration_number' => [
                 "required",
                 'unique:vehicles'
-            ]
+            ], 'user_id' => ['required','numeric']
         ];
     }
 }

@@ -29,7 +29,7 @@ class VehicleController extends Controller
             $registeredVehicle = (new VehicleDataClient())
                 ->vehicleDataByVehicleRegistrationNumber($vehicleRegistrationNumber);
             $vehicle = Vehicle::create([
-                    "user_id" => auth()->user()->id,
+                    "user_id" => $request->input("user_id"),
                     "guid" => Str::uuid(16),
                     "vehicle_registration_number" => $vehicleRegistrationNumber,
                     "registered_date" => $registeredVehicle['registered_date'],
