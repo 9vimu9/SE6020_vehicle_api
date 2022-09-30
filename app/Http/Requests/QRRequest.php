@@ -24,7 +24,8 @@ class QRRequest extends FormRequest
     public function rules()
     {
         return [
-            'vehicle_registration_number' => ["required"]
+            'vehicle_registration_number' => ["required"],
+            'user_id' => ['required','numeric']
         ];
     }
 }

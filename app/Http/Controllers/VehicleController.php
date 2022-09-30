@@ -52,12 +52,12 @@ class VehicleController extends Controller
             $vehicleRegistrationNumber = $request->input("vehicle_registration_number");
 
             $vehicle = Vehicle::where("vehicle_registration_number", $vehicleRegistrationNumber)
-                ->where("user_id", auth()->user()->id)
+                ->where("user_id", $request->input("user_id"))
                 ->firstOrFail();
 
             return response()->json($vehicle->toArray());
         } catch (ModelNotFoundException $exception) {
-            return response()->json(["message" => "no vehicle registered"], 404);
+            return response()->json(["message" => "no vehicle registered under this vehicle registration umber or user"], 404);
         }
 
     }
