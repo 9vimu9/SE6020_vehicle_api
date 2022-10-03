@@ -23,10 +23,10 @@ services:
     image: 9wimu9/vehicle-api-laravel:latest
     ports:
       - '8001:8000'
-    environment:
-        - DB_HOST=mariadb
-        - DB_PORT=3306
-        - DB_ENABLED=true
+#    environment:
+#        - DB_HOST=mariadb
+#        - DB_PORT=3306
+#        - DB_ENABLED=true
     volumes:
       - './:/app'
     depends_on:
