@@ -57,6 +57,7 @@ Resources:
       - LaravelTCP8000Listener
       - MariadbService
     Properties:
+      EnableExecuteCommand: true
       Cluster:
         Fn::GetAtt:
           - Cluster
@@ -159,7 +160,7 @@ Resources:
             - Condition: SUCCESS
               ContainerName: Laravel_ResolvConf_InitContainer
           Essential: true
-          Image: docker.io/9wimu9/vehicle-api-laravel:latest@sha256:f0a0a4991da03f5d46fb0622a92568678440444d9a77536fd588bc28cefbd01f
+          Image: docker.io/9wimu9/vehicle-api-laravel:latest@sha256:947c5629db9f0ca546a48427695f63a8a6ce43942fac982f307540faf5ceac10
           LinuxParameters: {}
           LogConfiguration:
             LogDriver: awslogs
@@ -176,6 +177,8 @@ Resources:
               Protocol: tcp
       Cpu: "256"
       ExecutionRoleArn:
+        Ref: LaravelTaskExecutionRole
+      TaskRoleArn:
         Ref: LaravelTaskExecutionRole
       Family: vehicle-api-laravel
       Memory: "512"
@@ -197,6 +200,7 @@ Resources:
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
         - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly
+        - arn:aws:iam::931838733925:policy/ecs-exec-required-iam-policy
       Tags:
         - Key: com.docker.compose.project
           Value: vehicle-api
@@ -341,7 +345,7 @@ Resources:
             Interval: 15
             Retries: 6
             Timeout: 5
-          Image: docker.io/9wimu9/vehicle-api-mariadb:latest@sha256:e63953f686f5661031f4df11390dfaefd73522d4dbfc066bfe9dde6aa626a375
+          Image: docker.io/9wimu9/vehicle-api-mariadb:latest@sha256:49c22351980271056daf00d144ce05571f187338b371b1629c2374500cd1e77c
           LinuxParameters: {}
           LogConfiguration:
             LogDriver: awslogs
@@ -377,7 +381,6 @@ Resources:
               Service: ecs-tasks.amazonaws.com
         Version: 2012-10-17
       ManagedPolicyArns:
-        - arn:aws:iam::931838733925:policy/ecs-exec-required-iam-policy
         - arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
         - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly
       Tags:
